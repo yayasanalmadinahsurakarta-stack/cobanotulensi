@@ -1,0 +1,1 @@
+ALTER TABLE public.rahasia_ai ADD COLUMN IF NOT EXISTS pin_situs text;

@@ -1,0 +1,653 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark {
+  &:is(.dark *, [data-theme="dark"] *) { @slot; }
+  @media (prefers-color-scheme: dark) {
+    &:not(:is([data-theme="light"] *)):not(:is([data-theme="dark"] *)) { @slot; }
+  }
+}
+
+/*
+ * Sistem Desain — Sistem Manajemen Notulensi Yayasan Al Madinah Surakarta
+ * Semua warna oklch. Semua ukuran teks dalam rem.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --font-sans:
+    "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  --font-serif:
+    "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+
+  --text-xs: 0.8125rem; /* 13px — batas terkecil */
+  --text-xs--line-height: 1.6;
+  --text-sm: 0.9375rem; /* 15px */
+  --text-sm--line-height: 1.7;
+  --text-base: 1.0625rem; /* 17px */
+  --text-base--line-height: 1.7;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.6;
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.5;
+  --text-2xl: 1.625rem;
+  --text-2xl--line-height: 1.4;
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 1.3;
+  --text-4xl: 2.5rem;
+  --text-4xl--line-height: 1.25;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-surface-2: var(--surface-2);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-pressed: var(--primary-pressed);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-faint-foreground: var(--faint-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
+  --color-gold-text: var(--gold-text);
+  --color-gold-pale: var(--gold-pale);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border-hair);
+  --color-border-hair: var(--border-hair);
+  --color-border-field: var(--border-field);
+  --color-input: var(--border-field);
+  --color-ring: var(--ring);
+
+  --color-status-danger-fg: var(--status-danger-fg);
+  --color-status-danger-bg: var(--status-danger-bg);
+  --color-status-warn-fg: var(--status-warn-fg);
+  --color-status-warn-bg: var(--status-warn-bg);
+  --color-status-ok-fg: var(--status-ok-fg);
+  --color-status-ok-bg: var(--status-ok-bg);
+
+  --shadow-card: 0 1px 2px oklch(0.25 0.04 163 / 0.05);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  --background: oklch(0.9880 0.0040 150.0);
+  --foreground: oklch(0.2200 0.0220 150.0);
+  --card: oklch(1.0 0.0 0.0);
+  --card-foreground: oklch(0.2200 0.0220 150.0);
+  --surface-2: oklch(0.9700 0.0090 150.0);
+  --popover: oklch(1.0 0.0 0.0);
+  --popover-foreground: oklch(0.2200 0.0220 150.0);
+
+  --primary: oklch(0.4750 0.1250 150.0); /* hijau khas Al Madinah */
+  --primary-foreground: oklch(1.0 0.0 0.0);
+  --primary-pressed: oklch(0.3850 0.1050 150.0);
+
+  --secondary: oklch(1.0 0.0 0.0);
+  --secondary-foreground: oklch(0.5150 0.1220 150.0);
+
+  --muted: oklch(0.9700 0.0090 150.0);
+  --muted-foreground: oklch(0.4700 0.0230 150.0);
+  --faint-foreground: oklch(0.5900 0.0210 150.0);
+
+  --accent: oklch(0.9600 0.0180 150.0);
+  --accent-foreground: oklch(0.4300 0.1080 150.0);
+
+  --gold: oklch(0.8700 0.1700 98.0);
+  --gold-bright: oklch(0.9100 0.1750 101.0);
+  --gold-text: oklch(0.5600 0.1080 84.0);
+  --gold-pale: oklch(0.9720 0.0620 98.0);
+
+  --destructive: oklch(0.4903 0.1806 27.9);
+  --destructive-foreground: oklch(1.0 0.0 0.0);
+
+  --border-hair: oklch(0.9260 0.0090 150.0);
+  --border-field: oklch(0.8300 0.0140 150.0);
+  --ring: oklch(0.5150 0.1220 150.0);
+
+  --status-danger-fg: oklch(0.4903 0.1806 27.9);
+  --status-danger-bg: oklch(0.9560 0.0170 32.5);
+  --status-warn-fg: oklch(0.4972 0.1553 42.2);
+  --status-warn-bg: oklch(0.9580 0.0200 51.9);
+  --status-ok-fg: oklch(0.4500 0.1000 150.0);
+  --status-ok-bg: oklch(0.9560 0.0210 150.0);
+}
+
+
+.dark,
+:root[data-theme="dark"] {
+  --background: oklch(0.1450 0.0250 150.0);
+  --foreground: oklch(0.9450 0.0150 105.0);
+  --card: oklch(0.1950 0.0300 150.0);
+  --card-foreground: oklch(0.9450 0.0150 105.0);
+  --surface-2: oklch(0.2350 0.0340 150.0);
+  --popover: oklch(0.1950 0.0300 150.0);
+  --popover-foreground: oklch(0.9450 0.0150 105.0);
+
+  --primary: oklch(0.6500 0.1450 150.0);
+  --primary-foreground: oklch(0.9850 0.0080 105.0);
+  --primary-pressed: oklch(0.4300 0.1050 150.0);
+
+  --secondary: oklch(0.2600 0.0210 150.0);
+  --secondary-foreground: oklch(0.7900 0.1250 150.0);
+
+  --muted: oklch(0.2450 0.0320 150.0);
+  --muted-foreground: oklch(0.7900 0.0250 125.0);
+  --faint-foreground: oklch(0.6800 0.0250 135.0);
+
+  --accent: oklch(0.2600 0.0210 150.0);
+  --accent-foreground: oklch(0.7900 0.1250 150.0);
+
+  --gold: oklch(0.8700 0.1700 98.0);
+  --gold-bright: oklch(0.9100 0.1750 101.0);
+  --gold-text: oklch(0.8800 0.1450 98.0);
+  --gold-pale: oklch(0.2600 0.0210 150.0);
+
+  --destructive: oklch(0.7288 0.1276 21.7);
+  --destructive-foreground: oklch(0.1720 0.0180 150.0);
+
+  --border-hair: oklch(0.3300 0.0450 150.0);
+  --border-field: oklch(0.5000 0.0550 150.0);
+  --ring: oklch(0.7200 0.1450 150.0);
+
+  --status-danger-fg: oklch(0.7288 0.1276 21.7);
+  --status-danger-bg: oklch(0.2554 0.0642 26.1);
+  --status-warn-fg: oklch(0.7737 0.1123 51.3);
+  --status-warn-bg: oklch(0.2517 0.0479 46.6);
+  --status-ok-fg: oklch(0.8100 0.1100 150.0);
+  --status-ok-bg: oklch(0.2600 0.0570 150.0);
+}
+
+/* Palet gelap ditulis ulang untuk setelan sistem, agar pilihan manual tetap menang. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+  --background: oklch(0.1450 0.0250 150.0);
+  --foreground: oklch(0.9450 0.0150 105.0);
+  --card: oklch(0.1950 0.0300 150.0);
+  --card-foreground: oklch(0.9450 0.0150 105.0);
+  --surface-2: oklch(0.2350 0.0340 150.0);
+  --popover: oklch(0.1950 0.0300 150.0);
+  --popover-foreground: oklch(0.9450 0.0150 105.0);
+
+  --primary: oklch(0.6500 0.1450 150.0);
+  --primary-foreground: oklch(0.9850 0.0080 105.0);
+  --primary-pressed: oklch(0.4300 0.1050 150.0);
+
+  --secondary: oklch(0.2600 0.0210 150.0);
+  --secondary-foreground: oklch(0.7900 0.1250 150.0);
+
+  --muted: oklch(0.2450 0.0320 150.0);
+  --muted-foreground: oklch(0.7900 0.0250 125.0);
+  --faint-foreground: oklch(0.6800 0.0250 135.0);
+
+  --accent: oklch(0.2600 0.0210 150.0);
+  --accent-foreground: oklch(0.7900 0.1250 150.0);
+
+  --gold: oklch(0.8700 0.1700 98.0);
+  --gold-bright: oklch(0.9100 0.1750 101.0);
+  --gold-text: oklch(0.8800 0.1450 98.0);
+  --gold-pale: oklch(0.2600 0.0210 150.0);
+
+  --destructive: oklch(0.7288 0.1276 21.7);
+  --destructive-foreground: oklch(0.1720 0.0180 150.0);
+
+  --border-hair: oklch(0.3300 0.0450 150.0);
+  --border-field: oklch(0.5000 0.0550 150.0);
+  --ring: oklch(0.7200 0.1450 150.0);
+
+  --status-danger-fg: oklch(0.7288 0.1276 21.7);
+  --status-danger-bg: oklch(0.2554 0.0642 26.1);
+  --status-warn-fg: oklch(0.7737 0.1123 51.3);
+  --status-warn-bg: oklch(0.2517 0.0479 46.6);
+  --status-ok-fg: oklch(0.8100 0.1100 150.0);
+  --status-ok-bg: oklch(0.2600 0.0570 150.0);
+  }
+}
+
+
+@layer base {
+  * {
+    border-color: var(--color-border-hair);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light dark;
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.7;
+    font-weight: 400;
+    overflow-x: clip;
+    max-width: 100%;
+
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-sans);
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  table {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@utility prosa {
+  max-width: 70ch;
+}
+
+/* Panel baca: latar lembut agar isi pembahasan nyaman dibaca. */
+@utility panel-baca {
+  background-color: color-mix(in oklab, var(--color-primary) 4%, var(--color-card));
+  border: 1px solid var(--color-border-hair);
+  border-inline-start: 4px solid var(--color-gold);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+@media (max-width: 639px) {
+  .panel-baca {
+    padding: 1rem;
+  }
+}
+
+.isi-kaya {
+  line-height: 1.85;
+  max-width: 74ch;
+  overflow-wrap: anywhere;
+}
+.isi-kaya > :first-child {
+  margin-block-start: 0;
+}
+.isi-kaya > :last-child {
+  margin-block-end: 0;
+}
+.isi-kaya p {
+  margin-block: 0.85rem;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+.isi-kaya h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-block: 1.4rem 0.5rem;
+}
+.isi-kaya h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-block: 1.1rem 0.4rem;
+}
+.isi-kaya ul,
+.isi-kaya ol {
+  padding-inline-start: 1.75rem;
+  margin-block: 0.85rem;
+}
+.isi-kaya ul {
+  list-style: disc;
+}
+.isi-kaya ol {
+  list-style: decimal;
+}
+.isi-kaya ol ol {
+  list-style: lower-alpha;
+}
+.isi-kaya ul ul {
+  list-style: circle;
+}
+.isi-kaya li {
+  margin-block: 0.45rem;
+  padding-inline-start: 0.25rem;
+}
+.isi-kaya li::marker {
+  color: var(--color-gold-text);
+  font-weight: 700;
+}
+.isi-kaya blockquote {
+  border-inline-start: 4px solid var(--color-gold);
+  background-color: color-mix(in oklab, var(--color-gold) 10%, transparent);
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-sm);
+  margin-block: 0.9rem;
+  font-style: italic;
+}
+.isi-kaya mark {
+  background-color: #fde68a;
+  color: #1c1917;
+  padding-inline: 0.15em;
+  border-radius: 0.2rem;
+}
+.isi-kaya u {
+  text-underline-offset: 0.2em;
+}
+
+
+
+@utility nomor-notulen {
+  font-family: var(--font-mono);
+  color: var(--color-gold-text);
+  font-weight: 500;
+}
+
+@utility tabel-gulir {
+  overflow-x: auto;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media print {
+  .tanpa-cetak {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
+
+/* Teks berjalan untuk hal urgen; berhenti bila pengguna meminta gerak minimal. */
+@keyframes jalan-kiri {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.teks-berjalan {
+  display: inline-flex;
+  min-width: 200%;
+  gap: 4rem;
+  animation: jalan-kiri 24s linear infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .teks-berjalan {
+    animation: none;
+    min-width: 0;
+  }
+  .teks-berjalan > span + span {
+    display: none;
+  }
+}
+
+@page {
+  margin: 2cm 2cm 2cm 2.5cm;
+}
+
+@media print {
+  .lembar-cetak {
+    max-width: none;
+    padding: 0;
+    background: #fff;
+  }
+  a[href]::after {
+    content: "";
+  }
+}
+
+/* Hormati permintaan gerak minimal di seluruh aplikasi. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Kontras lebih tinggi bila diminta sistem pengguna. */
+@media (prefers-contrast: more) {
+  :root {
+    --border-hair: oklch(0.6206 0.0243 150.0);
+    --border-field: oklch(0.3388 0.0867 150.0);
+    --muted-foreground: oklch(0.3388 0.0867 150.0);
+    --faint-foreground: oklch(0.3388 0.0867 150.0);
+  }
+  .dark,
+  :root[data-theme="dark"] {
+    --border-hair: oklch(0.6274 0.0266 150.0);
+    --border-field: oklch(0.7802 0.1037 150.0);
+    --muted-foreground: oklch(0.9333 0.0106 150.0);
+    --faint-foreground: oklch(0.9333 0.0106 150.0);
+  }
+  * {
+    border-width: 1px;
+  }
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* ---------- Gerak halus & animasi ---------- */
+@keyframes muncul-naik {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes muncul-halus {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes buka-panel {
+  from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@utility muncul {
+  animation: muncul-naik 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility muncul-lembut {
+  animation: muncul-halus 0.4s ease-out both;
+}
+@utility panel-muncul {
+  animation: buka-panel 0.18s ease-out both;
+}
+@utility angkat {
+  transition:
+    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -14px oklch(0.35 0.09 150 / 0.45);
+  }
+}
+
+.jeda-1 { animation-delay: 60ms; }
+.jeda-2 { animation-delay: 120ms; }
+.jeda-3 { animation-delay: 180ms; }
+.jeda-4 { animation-delay: 240ms; }
+
+@layer base {
+  a,
+  button,
+  summary,
+  [role="menuitem"],
+  input,
+  select,
+  textarea {
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+  button:active,
+  a[role="menuitem"]:active {
+    transform: scale(0.98);
+  }
+  main {
+    animation: muncul-halus 0.3s ease-out both;
+  }
+}
+
+@utility kaca {
+  background: color-mix(in oklab, var(--card) 72%, transparent);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--gold, var(--primary)) 28%, transparent);
+  box-shadow: 0 8px 28px -18px color-mix(in oklab, var(--primary) 55%, transparent);
+}
+
+@utility sorotan-portal {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--primary) 92%, var(--gold) 8%),
+      var(--primary-pressed)
+    );
+  border: 1px solid color-mix(in oklab, var(--gold) 42%, transparent);
+  box-shadow:
+    0 20px 50px -30px color-mix(in oklab, var(--primary) 80%, transparent),
+    inset 0 1px color-mix(in oklab, var(--gold-bright) 22%, transparent);
+}
+
+@utility panel-saringan-portal {
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  backdrop-filter: blur(18px) saturate(125%);
+  border: 1px solid color-mix(in oklab, var(--gold) 18%, var(--border-hair));
+  box-shadow: 0 18px 45px -35px color-mix(in oklab, var(--gold) 40%, transparent);
+}
+
+@media print {
+  .kaca {
+    background: none;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+}
+
+/* Layar HP: hindari jarak antar kata yang terlalu lebar dan jaga lebar isi. */
+@media (max-width: 639px) {
+  .isi-kaya {
+    max-width: 100%;
+  }
+  .isi-kaya p {
+    text-align: left;
+    hyphens: manual;
+  }
+  .isi-kaya ul,
+  .isi-kaya ol {
+    padding-inline-start: 1.25rem;
+    margin-inline: 0;
+  }
+  .isi-kaya li {
+    padding-inline-start: 0.15rem;
+  }
+  .isi-kaya table,
+  .isi-kaya pre,
+  .isi-kaya img {
+    max-width: 100%;
+  }
+  .isi-kaya pre {
+    white-space: pre-wrap;
+  }
+  .isi-kaya blockquote {
+    margin-inline: 0;
+  }
+}
+
+/* Sorotan kata kunci hasil pencarian */
+mark.sorot-cari {
+  background: color-mix(in srgb, var(--color-gold) 55%, transparent);
+  color: inherit;
+  border-radius: 0.25rem;
+  padding: 0 0.15em;
+  font-weight: 600;
+}
+
+/* Pil reaksi emoji pada kolom komentar */
+@keyframes reaksi-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.reaksi-pil {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border-hair);
+  background: var(--color-card);
+  padding: 0.15rem 0.55rem;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  animation: reaksi-pop 0.25s ease-out;
+}
+.reaksi-pil:hover {
+  transform: translateY(-1px) scale(1.06);
+}
+.reaksi-pil-aktif {
+  border-color: var(--color-gold);
+  background: var(--color-gold-pale);
+}
+.reaksi-emoji {
+  font-size: 1rem;
+  line-height: 1.2;
+  transition: transform 0.2s ease;
+}
+@media (max-width: 640px) {
+  .reaksi-pil { padding: 0.1rem 0.4rem; gap: 0.15rem; }
+  .reaksi-emoji { font-size: 0.9rem; }
+}
+.reaksi-pil:hover .reaksi-emoji {
+  transform: scale(1.2) rotate(-6deg);
+}
+.komentar-tujuan:target > div > div:first-child {
+  border-color: var(--color-gold);
+  background: color-mix(in oklab, var(--color-gold-pale) 72%, var(--color-card));
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-gold) 22%, transparent);
+  animation: komentar-disorot 1.2s ease-out;
+}
+@keyframes komentar-disorot {
+  0%, 45% { transform: scale(1.012); }
+  100% { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reaksi-pil, .reaksi-emoji { animation: none; transition: none; }
+}
